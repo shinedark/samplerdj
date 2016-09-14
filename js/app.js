@@ -1,15 +1,17 @@
 var KeyMapper = {
 	_keyMap: {},
 	_valueMap: {},
-	create: function(code, value) {
+	_effectMap: {},
+	create: function(code, value, effect) {
 		this._keyMap[code] = value;
 		this._valueMap[value] = code;
+		this._effectMap[effect] = { value: value, code: code };
 	},
-	getValue: function(code) {
-		return this._keyMap[code];
+	getValue: function(codeOrEffect) {
+		return this._keyMap[codeOrEffect] || this._effectMap[codeOrEffect].value;
 	},
-	getCode: function(value) {
-		return this._valueMap[value];
+	getCode: function(valueOrEffect) {
+		return this._valueMap[valueOrEffect] || this._effectMap[valueOrEffect].code;
 	}
 }
 
@@ -24,20 +26,24 @@ KeyMapper.create(85, 'U');
 KeyMapper.create(73, 'I');
 KeyMapper.create(79, 'O');
 KeyMapper.create(80, 'P');
+KeyMapper.create(88, 'X', 'Delay');
+KeyMapper.create(67, 'C', 'Filter');
+KeyMapper.create(86, 'V', 'Reverb');
 
 
 $(document).ready(function() {
-	var sampler1 = createSampler('audio/1.mp3', KeyMapper.getCode('Q'),'track1');
-	var sampler2 = createSampler('audio/2.mp3', KeyMapper.getCode('W'),'track2');
-	var sampler3 = createSampler('audio/3.mp3', KeyMapper.getCode('E'),'track3');
-  	var sampler4 = createSampler('audio/4.mp3', KeyMapper.getCode('R'),'track4');
-  	var sampler5 = createSampler('audio/5.mp3', KeyMapper.getCode('T'),'track5');
-  	var sampler6 = createSampler('audio/6.mp3', KeyMapper.getCode('Y'),'track6');
-  	var sampler7 = createSampler('audio/7.mp3', KeyMapper.getCode('U'),'track7');
-  	var sampler8 = createSampler('audio/8.mp3', KeyMapper.getCode('I'),'track8');
-  	var sampler9 = createSampler('audio/9.mp3', KeyMapper.getCode('O'),'track9');
-  	var sampler10 = createSampler('audio/10.mp3', KeyMapper.getCode('P'),'track10');
-
+	var sampler1 = createSampler('./audio/1.mp3', KeyMapper.getCode('Q'),'track1');
+	var sampler2 = createSampler('./audio/2.mp3', KeyMapper.getCode('W'),'track2');
+	var sampler3 = createSampler('./audio/3.mp3', KeyMapper.getCode('E'),'track3');
+  	var sampler4 = createSampler('./audio/4.mp3', KeyMapper.getCode('R'),'track4');
+  	var sampler5 = createSampler('./audio/5.mp3', KeyMapper.getCode('T'),'track5');
+  	var sampler6 = createSampler('./audio/6.mp3', KeyMapper.getCode('Y'),'track6');
+  	var sampler7 = createSampler('./audio/7.mp3', KeyMapper.getCode('U'),'track7');
+  	var sampler8 = createSampler('./audio/8.mp3', KeyMapper.getCode('I'),'track8');
+  	var sampler9 = createSampler('./audio/9.mp3', KeyMapper.getCode('O'),'track9');
+  	var sampler10 = createSampler('./audio/10.mp3', KeyMapper.getCode('P'),'track10');
+    
+  	
   	sampler1.render();
   	sampler2.render();
   	sampler3.render();
@@ -61,7 +67,13 @@ $(document).ready(function() {
 // Factory pattern 
 function createSampler(audioSrc, keyCode, name) {
 	var sampler = {
-		_aud: new Audio(audioSrc),
+		_aud: new Pizzicato.Sound({ 
+		    source: 'file',
+		    options: {
+		    	path: audioSrc,
+		    }
+		}),
+
 		src: audioSrc,
 		keyCode: keyCode,
 		name: name,
@@ -72,8 +84,7 @@ function createSampler(audioSrc, keyCode, name) {
           this.isPlaying = true;
 		},
 		stop: function(){
-		  this._aud.pause();
-		  this._aud.load();
+		  this._aud.stop();
 		  this._aud.loop = false;
 		  this.isPlaying = false;
 		  this.isLooping = false;
@@ -86,7 +97,7 @@ function createSampler(audioSrc, keyCode, name) {
 			$('.artwork').append('<li>Press ' + KeyMapper.getValue(this.keyCode) + ' for ' + this.name + '</li>');
 		}
 	};
-	sampler._aud.preload = true;
+	// sampler._aud.preload = true;
 
 	$(document).keydown(function(evt) {
 		if (evt.keyCode == sampler.keyCode) {
@@ -100,14 +111,61 @@ function createSampler(audioSrc, keyCode, name) {
 		    	sampler.loop();
 		   	}
 		}
+		else if (evt.keyCode == KeyMapper.getCode('Delay') && sampler.isPlaying){
+				sampler._aud.addEffect(dubDelay);
+			}
+		else if (evt.keyCode == KeyMapper.getCode('Filter') && sampler.isPlaying){
+				sampler._aud.addEffect(lowPassFilter);
+			}
+		else if (evt.keyCode == KeyMapper.getCode('Reverb') && sampler.isPlaying){
+				sampler._aud.addEffect(reverb);
+			}
+
 	}).keyup(function(evt) {
 		if (evt.keyCode == sampler.keyCode && !sampler.isLooping) {
 			sampler.stop();
 		}
+		else  if (evt.keyCode == KeyMapper.getCode('Delay') ) {
+			sampler._aud.removeEffect(dubDelay);
+		}
+		else  if (evt.keyCode == KeyMapper.getCode('Filter') ) {
+			sampler._aud.removeEffect(lowPassFilter); 	
+		}
+		else  if (evt.keyCode == KeyMapper.getCode('Reverb') ) {
+			sampler._aud.removeEffect(reverb);
+		}
+
 	});
 
 	return sampler;
 }
+
+
+
+// need to implement this to the object above and add the functionality that when keydown delay lays keyup remove fx
+// once delay is added add lowpasfilter and reverb witht he same functionality. same way we did with spacebar
+  
+
+
+var dubDelay = new Pizzicato.Effects.DubDelay({
+    feedback: 0.6,
+    time: 0.7,
+    mix: 0.5,
+    cutoff: 700
+});
+
+var lowPassFilter = new Pizzicato.Effects.LowPassFilter({
+    frequency: 500,
+    peak: 30,
+    mix: 0.5
+});
+
+var reverb = new Pizzicato.Effects.Reverb({
+    time: 1,
+    decay: 0.8,
+    reverse: true,
+    mix: 0.75
+});
 
 
 
