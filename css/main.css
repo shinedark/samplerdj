@@ -186,3 +186,18 @@ background: radial-gradient(circle, black, white);
   text-align: center;
 	
 }
+
+#search-term {
+	height: 100px;
+	width: 350px;
+	display: block;
+	margin: 0 auto;
+}
+
+.button {
+background: black;	
+padding: 5px;
+color: white;
+font-weight: bold;
+text-align: center;
+}

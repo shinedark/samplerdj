@@ -54,6 +54,7 @@ $(document).ready(function() {
   	sampler8.render();
   	sampler9.render();
   	sampler10.render();
+  	
 
   	$(".how").click(function(){
     	$(".overlay").fadeIn(1000);
@@ -95,9 +96,12 @@ function createSampler(audioSrc, keyCode, name) {
 		},
 		render: function(){
 			$('.artwork').append('<li>Press ' + KeyMapper.getValue(this.keyCode) + ' for ' + this.name + '</li>');
-		}
+		},
+		hasFx: function(fx){
+			return this._aud.effects.includes(fx);
+		},
 	};
-	// sampler._aud.preload = true;
+	
 
 	$(document).keydown(function(evt) {
 		if (evt.keyCode == sampler.keyCode) {
@@ -112,14 +116,20 @@ function createSampler(audioSrc, keyCode, name) {
 		   	}
 		}
 		else if (evt.keyCode == KeyMapper.getCode('Delay') && sampler.isPlaying){
+			if (!sampler.hasFx(dubDelay)){
 				sampler._aud.addEffect(dubDelay);
 			}
+		}
 		else if (evt.keyCode == KeyMapper.getCode('Filter') && sampler.isPlaying){
+			if (!sampler.hasFx(lowPassFilter)){
 				sampler._aud.addEffect(lowPassFilter);
 			}
+		}
 		else if (evt.keyCode == KeyMapper.getCode('Reverb') && sampler.isPlaying){
+			if (!sampler.hasFx(reverb)){
 				sampler._aud.addEffect(reverb);
-			}
+			}		
+		}
 
 	}).keyup(function(evt) {
 		if (evt.keyCode == sampler.keyCode && !sampler.isLooping) {
@@ -142,8 +152,7 @@ function createSampler(audioSrc, keyCode, name) {
 
 
 
-// need to implement this to the object above and add the functionality that when keydown delay lays keyup remove fx
-// once delay is added add lowpasfilter and reverb witht he same functionality. same way we did with spacebar
+
   
 
 
@@ -156,7 +165,7 @@ var dubDelay = new Pizzicato.Effects.DubDelay({
 
 var lowPassFilter = new Pizzicato.Effects.LowPassFilter({
     frequency: 500,
-    peak: 30,
+    peak: 15,
     mix: 0.5
 });
 
@@ -166,6 +175,22 @@ var reverb = new Pizzicato.Effects.Reverb({
     reverse: true,
     mix: 0.75
 });
+
+
+// $(document).ajaxStart(function(){
+// 	$('#search-term')
+// }
+
+
+// create jason for itunes  figure how to promp 10 songs into the 10 keys and display artwork let them search by genre
+ 
+// create a function that creates the 10 samplers 
+// add controling parameters to fx when key press 
+// add fx to display 
+
+
+
+//limit to top 10 rated songs 
 
 
 
