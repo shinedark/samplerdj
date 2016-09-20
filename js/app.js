@@ -108,12 +108,12 @@ function createSampler(audioSrc, keyCode, name) {
 		  this.isLooping = true;
 		},
 		render: function(){
-			// $('.artwork').append('<li>Press ' + KeyMapper.getValue(this.keyCode) + ' for ' + this.name + '</li>');
 			var node = $('<li>Press ' + KeyMapper.getValue(this.keyCode) + ' for ' + this.name + '</li>').appendTo('.artwork');
+			var self = this;
 			node.on('touchstart', function(evt){
-				this.play();
+				self.play();
 			}).on('touchend', function(evt) {
-				this.stop();
+				self.stop();
 			});
 		},
 		hasFx: function(fx){
@@ -270,16 +270,35 @@ var pingPongDelay = new Pizzicato.Effects.PingPongDelay({
 
 
 
+// var searchSongs = function(term){
+ 
+//  	var request = {
+    	
+// 		media: 'music',
+// 		entity: 'song',
+// 		limit: 1,
+// 		explicit: 'Yes',
+// 	};
 
-
-
-
-
-
-// $(document).ajaxStart(function(){
-// 	$('#search-term')
-// }
-
+// 	$.ajax({
+// 		url: "https://itunes.apple.com/search?"
+// 		data: request,
+// 		dataType: "jsonp"
+// 		type: "GET"
+// 	})
+// 	.done(function(result){
+// 		var searchResults = getSerachResults(request.media, result.item.lenght);
+// 		$('.search-term').html(searchResults);
+// 		$.each(result.items, function(i, item) {
+// 			var music = getMuisc(item);
+// 			$('.search-results').append(music);
+// 		});
+// 	})
+// 	.fail(function(jqXHR, error){
+// 		var errorELm = showError(error);
+// 		$('.search-results').html(errorElem);
+// 	});
+// };
 
 // create jason for itunes  figure how to promp songs into the keys and display artwork let them search by genre
 // droppable function in jquery might work for drag and drop songs 

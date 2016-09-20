@@ -1,0 +1,38 @@
+{
+	"resultCount":1,
+	"results": [
+		{
+			"wrapperType": "track", 
+			"kind": "song", 
+			"artistId": 112018, 
+			"collectionId": 112041, 
+			"trackId": 112021, 
+			"artistName": "Nirvana",
+			"collectionName": "Nirvana",
+			"trackName": "Smells Like Teen Spirit", 
+			"collectionCensoredName": "Nirvana",
+			"trackCensoredName": "Smells Like Teen Spirit",
+			"artistViewUrl": "https://itunes.apple.com/us/artist/nirvana/id112018?uo=4", 
+			"collectionViewUrl": "https://itunes.apple.com/us/album/smells-like-teen-spirit/id112041?i=112021&uo=4", 
+			"trackViewUrl": "https://itunes.apple.com/us/album/smells-like-teen-spirit/id112041?i=112021&uo=4", 
+			"previewUrl": "http://a1215.phobos.apple.com/us/r1000/006/Music5/v4/d2/0a/f4/d20af4de-f602-705d-6eea-2568a420c73b/mzaf_1793764239195202364.plus.aac.p.m4a", 
+			"artworkUrl30": "http://is2.mzstatic.com/image/thumb/Music7/v4/17/bb/50/17bb50ba-954d-a6f4-5b45-63f70b4bb1de/source/30x30bb.jpg", 
+			"artworkUrl60": "http://is2.mzstatic.com/image/thumb/Music7/v4/17/bb/50/17bb50ba-954d-a6f4-5b45-63f70b4bb1de/source/60x60bb.jpg", 
+			"artworkUrl100": "http://is2.mzstatic.com/image/thumb/Music7/v4/17/bb/50/17bb50ba-954d-a6f4-5b45-63f70b4bb1de/source/100x100bb.jpg", 
+			"collectionPrice": 8.99, 
+			"trackPrice": 1.29,
+			"releaseDate": "2002-10-29T08:00:00Z", 
+			"collectionExplicitness": "notExplicit", 
+			"trackExplicitness": "notExplicit", 
+			"discCount": 1, 
+			"discNumber": 1, 
+			"trackCount": 14, 
+			"trackNumber": 5, 
+			"trackTimeMillis": 301453, 
+			"country": "USA", 
+			"currency": "USD", 
+			"primaryGenreName": "Alternative", 
+			"isStreamable": true
+		}
+	]
+}
