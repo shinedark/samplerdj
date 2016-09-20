@@ -188,8 +188,16 @@ background: radial-gradient(circle, black, white);
 }
 
 #search-term {
-	height: 100px;
+	height: 50px;
 	width: 350px;
+	display: block;
+	margin: 0 auto;
+	list-style-type: disc;
+}
+
+#search-results {
+    height: 100px;
+	width: 1150px;
 	display: block;
 	margin: 0 auto;
 }
