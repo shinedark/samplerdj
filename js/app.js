@@ -55,7 +55,15 @@ $(document).ready(function() {
   	var sampler8 = createSampler('./audio/8.mp3', KeyMapper.getCode('I'),'track8');
   	var sampler9 = createSampler('./audio/9.mp3', KeyMapper.getCode('O'),'track9');
   	var sampler10 = createSampler('./audio/10.mp3', KeyMapper.getCode('P'),'track10');
-    
+    var sampler11 = createSampler('./audio/11.mp3', KeyMapper.getCode('A'),'track11');
+    var sampler12 = createSampler('./audio/12.mp3', KeyMapper.getCode('S'),'track12');
+    var sampler13 = createSampler('./audio/13.mp3', KeyMapper.getCode('D'),'track13');
+    var sampler14 = createSampler('./audio/14.mp3', KeyMapper.getCode('F'),'track14');
+    var sampler15 = createSampler('./audio/15.mp3', KeyMapper.getCode('G'),'track15');
+    var sampler16 = createSampler('./audio/16.mp3', KeyMapper.getCode('H'),'track16');
+    var sampler17 = createSampler('./audio/17.mp3', KeyMapper.getCode('J'),'track17');
+    var sampler18 = createSampler('./audio/18.mp3', KeyMapper.getCode('K'),'track18');
+    var sampler19 = createSampler('./audio/19.mp3', KeyMapper.getCode('L'),'track19');
   	
   	sampler1.render();
   	sampler2.render();
@@ -67,6 +75,23 @@ $(document).ready(function() {
   	sampler8.render();
   	sampler9.render();
   	sampler10.render();
+  	sampler11.render();
+  	sampler12.render();
+  	sampler13.render();
+  	sampler14.render();
+  	sampler15.render();
+  	sampler16.render();
+  	sampler17.render();
+  	sampler18.render();
+  	sampler19.render();
+
+  	$('#search-term').submit(function(e){
+
+  		e.preventDefault();
+       	$('#search-results').html('');
+       	var term= $(this).find("imput[name='song']").val();
+        searchSongs(term);
+  	});
   	
 
   	$(".how").click(function(){
@@ -268,42 +293,65 @@ var pingPongDelay = new Pizzicato.Effects.PingPongDelay({
 });
 
 
+var getSearchResults = function(media, resultNum) {
+	var results = resultNum + ' results for <strong>' + media + '</strong>';
+	return results;
+};
+
+var showError = function(error){
+	var errorElem = $('.templates .error').clone();
+	var errorText = '<p>' + error + '</p>';
+	errorElem.append(errorText);
+};
 
 
-// var searchSongs = function(term){
+var getMuisc = function (term) {
+	var results = $('.templates .music').clone();
+
+	var songElem = result.find('.result .music');
+	songElem.attr('href', previewUrl.artworkUrl30);
+	songElem.text(artistName.trackName);
+
+
+	return results;
+}
+
+var searchSongs = function(term){
  
-//  	var request = {
+ 	var request = {
     	
-// 		media: 'music',
-// 		entity: 'song',
-// 		limit: 1,
-// 		explicit: 'Yes',
-// 	};
+		media: 'music',
+		entity: 'song',
+		limit: 1,
+		explicit: 'Yes',
+	};
 
-// 	$.ajax({
-// 		url: "https://itunes.apple.com/search?"
-// 		data: request,
-// 		dataType: "jsonp"
-// 		type: "GET"
-// 	})
-// 	.done(function(result){
-// 		var searchResults = getSerachResults(request.media, result.item.lenght);
-// 		$('.search-term').html(searchResults);
-// 		$.each(result.items, function(i, item) {
-// 			var music = getMuisc(item);
-// 			$('.search-results').append(music);
-// 		});
-// 	})
-// 	.fail(function(jqXHR, error){
-// 		var errorELm = showError(error);
-// 		$('.search-results').html(errorElem);
-// 	});
-// };
+	$.ajax({
+		url: "https://itunes.apple.com/search?",
+		data: request,
+		dataType: "jsonp",
+		type: "GET",
+	})
+	.done(function(data){
+		var searchResults = getSearchResults(request.media, data.entity);
+		 console.log(data)
+		$('#search-term').html(searchResults);
+		$.each(data.entity, function(i, item) {
+			c
+			var music = getMuisc(item);
+			$('#search-results').append(music);
+		});
+	})
+	.fail(function(jqXHR, error){
+		var errorELm = showError(error);
+		$('#search-results').html(errorElem);
+	});
+};
 
 // create jason for itunes  figure how to promp songs into the keys and display artwork let them search by genre
 // droppable function in jquery might work for drag and drop songs 
 // create a function that creates the  samplers 
- 
+// prevent keyboard from tiggering sounds when searching for songs 
  
 
 

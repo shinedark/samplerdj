@@ -28,6 +28,7 @@
 						<li>4.if you press any key on the row from Z to M it  will add a audio effect to the audio</li>
 						<li>5.To load a song use the search bar and once you find what you are looking for, drag and drop to one of the 19 open samplers</li>
 						<li>6.To empty the smapler just hit new on the top right</li>
+						<li>Mobile version limits effects and samplers</li>
 					</ul>
 					<p>Are you ready?</p>
 					<a class="close" href="#">Got It!</a>
@@ -40,11 +41,20 @@
 		</div>
 	
 	</header>
-			<form id="search-term">
+			<form id="search-term" onsubmit="return false;">
 			<input type="text" name="form">	
 			<button class="button" type="submit">Search Apple Music</button>
 			</form>
 			<div id="search-results"></div>
+			<div class="templates hidden">
+				<dl class="result music">
+            		<dt>Songs</dt>
+                </dl> 	
+					<div class="error">
+            		<p>Uh-oh! Something went wrong with your request. Here's what we know:</p>
+       			 	</div>
+
+       		</div>
 				<content id="sampler">
 					<ul class="artwork">
 						
