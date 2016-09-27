@@ -172,7 +172,7 @@ h1 {
  
 }
 
-.artwork > li {
+.artwork  > li {
 background: radial-gradient(circle, black, white);
   padding: 5px;
   width: 200px;
@@ -209,18 +209,44 @@ background: radial-gradient(circle, black, white);
 
 
 #search-term {
-	height: 50px;
+	
 	width: 350px;
 	display: block;
 	margin: 0 auto;
 	list-style-type: disc;
 }
 
-#search-results {
-    height: 100px;
+.search-results {
+  
 	width: 1150px;
 	display: block;
 	margin: 0 auto;
+	padding: 5px;
+}
+
+.draggable {
+    
+	width: 1150px;
+	display: block;
+	margin: 0 auto;
+	
+}
+
+
+.draggable >li {
+    width: 100px; 
+     
+    padding: 5px; 
+    margin: 10px 10px 10px 0;
+    display: inline-block;
+}
+
+.droppable > li {
+	width: 200px; 
+
+	padding: 5px; 
+	margin-top: 10px; 
+
 }
 
 .button {
@@ -230,3 +256,5 @@ color: white;
 font-weight: bold;
 text-align: center;
 }
+
+

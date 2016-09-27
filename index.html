@@ -41,22 +41,26 @@
 		</div>
 	
 	</header>
-			<form id="search-term" onsubmit="return false;">
-			<input type="text" name="form">	
+			<form id="search-term">
+			<input type="text" placeholder="e.g., Future" name="song" size="20" required>	
 			<button class="button" type="submit">Search Apple Music</button>
 			</form>
-			<div id="search-results"></div>
-			<div class="templates hidden">
-				<dl class="result music">
-            		<dt>Songs</dt>
-                </dl> 	
-					<div class="error">
-            		<p>Uh-oh! Something went wrong with your request. Here's what we know:</p>
-       			 	</div>
-
-       		</div>
+				<div class="search-results">
+						<ul class="draggable">
+							
+						</ul>
+				
+				</div>
+					<div class="templates hidden">
+						<li class="result">
+						<audio class="asong" src=""></audio>
+						<img class="awork" src="">
+						<p></p>
+						</li>
+					</div> 
+       		
 				<content id="sampler">
-					<ul class="artwork">
+					<ul class="artwork droppable">
 						
 					</ul>
 				

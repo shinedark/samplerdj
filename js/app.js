@@ -44,52 +44,26 @@ KeyMapper.create(77, 'M', 'Hfilter');
 KeyMapper.create(32, 'SPACE');
 
 
+
+
+
+
+
+
+
 $(document).ready(function() {
-	var sampler1 = createSampler('./audio/1.mp3', KeyMapper.getCode('Q'),'track1');
-	var sampler2 = createSampler('./audio/2.mp3', KeyMapper.getCode('W'),'track2');
-	var sampler3 = createSampler('./audio/3.mp3', KeyMapper.getCode('E'),'track3');
-  	var sampler4 = createSampler('./audio/4.mp3', KeyMapper.getCode('R'),'track4');
-  	var sampler5 = createSampler('./audio/5.mp3', KeyMapper.getCode('T'),'track5');
-  	var sampler6 = createSampler('./audio/6.mp3', KeyMapper.getCode('Y'),'track6');
-  	var sampler7 = createSampler('./audio/7.mp3', KeyMapper.getCode('U'),'track7');
-  	var sampler8 = createSampler('./audio/8.mp3', KeyMapper.getCode('I'),'track8');
-  	var sampler9 = createSampler('./audio/9.mp3', KeyMapper.getCode('O'),'track9');
-  	var sampler10 = createSampler('./audio/10.mp3', KeyMapper.getCode('P'),'track10');
-    var sampler11 = createSampler('./audio/11.mp3', KeyMapper.getCode('A'),'track11');
-    var sampler12 = createSampler('./audio/12.mp3', KeyMapper.getCode('S'),'track12');
-    var sampler13 = createSampler('./audio/13.mp3', KeyMapper.getCode('D'),'track13');
-    var sampler14 = createSampler('./audio/14.mp3', KeyMapper.getCode('F'),'track14');
-    var sampler15 = createSampler('./audio/15.mp3', KeyMapper.getCode('G'),'track15');
-    var sampler16 = createSampler('./audio/16.mp3', KeyMapper.getCode('H'),'track16');
-    var sampler17 = createSampler('./audio/17.mp3', KeyMapper.getCode('J'),'track17');
-    var sampler18 = createSampler('./audio/18.mp3', KeyMapper.getCode('K'),'track18');
-    var sampler19 = createSampler('./audio/19.mp3', KeyMapper.getCode('L'),'track19');
+
   	
-  	sampler1.render();
-  	sampler2.render();
-  	sampler3.render();
-  	sampler4.render();
-  	sampler5.render();
-  	sampler6.render();
-  	sampler7.render();
-  	sampler8.render();
-  	sampler9.render();
-  	sampler10.render();
-  	sampler11.render();
-  	sampler12.render();
-  	sampler13.render();
-  	sampler14.render();
-  	sampler15.render();
-  	sampler16.render();
-  	sampler17.render();
-  	sampler18.render();
-  	sampler19.render();
+  	for (var i = 18; i >= 0; i--) {
+  		createSampler().render();
+  	}
+  
 
-  	$('#search-term').submit(function(e){
 
-  		e.preventDefault();
-       	$('#search-results').html('');
-       	var term= $(this).find("imput[name='song']").val();
+  	$('#search-term').submit( function(event){
+		event.preventDefault();
+       	
+       	var term= $(this).find("input[name='song']").val();
         searchSongs(term);
   	});
   	
@@ -103,21 +77,29 @@ $(document).ready(function() {
   	});
 });
 
-// Factory pattern 
-function createSampler(audioSrc, keyCode, name) {
-	var sampler = {
-		_aud: new Pizzicato.Sound({ 
-		    source: 'file',
-		    options: {
-		    	path: audioSrc,
-		    }
-		}),
 
-		src: audioSrc,
+var keyQueue = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
+// Factory pattern 
+function createSampler(audioSrc, name) {
+
+	if (!keyQueue.length){
+		throw new Error (' Max Samplers already created.');
+	}
+	var keyCode = KeyMapper.getCode(keyQueue.shift());
+	var sampler = {
 		keyCode: keyCode,
-		name: name,
 		isPlaying: false,
 		isLooping: false,
+		sound: function(audioSrc, name) {
+			this._aud = new Pizzicato.Sound({ 
+		    	source: 'file',
+		    	options: {
+		    		path: audioSrc,
+		    	}
+			});
+			this.name = name;
+			this.audioSrc = audioSrc;
+		},
 		play: function() {
           this._aud.play();
           this.isPlaying = true;
@@ -139,7 +121,12 @@ function createSampler(audioSrc, keyCode, name) {
 				self.play();
 			}).on('touchend', function(evt) {
 				self.stop();
+			}).on('drop', function(evt) {
+				evt.preventDefault();
+				evt.stopPropagation();
+				console.log('hello');
 			});
+			//need to make this node droppable 
 		},
 		hasFx: function(fx){
 			return this._aud.effects.includes(fx);
@@ -243,6 +230,29 @@ function createSampler(audioSrc, keyCode, name) {
 
 
 
+
+ // touch effects mobile still have to figure out how to limit to the 2 filters by swipe up or down while hodling it down
+// var effectsTouch = function(){
+// 			var node = $('<li> ' + '</li>').append('.Effects');
+// 					var self = this;
+// 					node.on('touchstart', function(evt){
+// 					self.play();
+// 					}).on('touchend', function(evt) {
+// 					self.stop();
+// 					});
+// 				};
+
+
+// drag and drop function i think it goes in the doc . ready
+$( function() {
+    // $( ".draggable" ).draggable();
+    $( ".droppable" ).droppable({
+      drop: function( event, ui ) {
+    console.log(ui.draggable[0].children[0].attributes[2].nodeValue);
+      }
+    });
+  } );
+
   
 
 
@@ -292,9 +302,9 @@ var pingPongDelay = new Pizzicato.Effects.PingPongDelay({
     mix: 0.68
 });
 
-
-var getSearchResults = function(media, resultNum) {
-	var results = resultNum + ' results for <strong>' + media + '</strong>';
+//shows results # but thats it
+var getSearchResults = function(entity, resultNum) {
+	var results = resultNum + ' results for ' + entity;
 	return results;
 };
 
@@ -304,61 +314,59 @@ var showError = function(error){
 	errorElem.append(errorText);
 };
 
-
-var getMuisc = function (term) {
-	var results = $('.templates .music').clone();
-
-	var songElem = result.find('.result .music');
-	songElem.attr('href', previewUrl.artworkUrl30);
-	songElem.text(artistName.trackName);
-
-
-	return results;
-}
+// this is not doign what i expect not showig the artwork or preview or name or trackname
+//need to fix this 
+var getMusic = function (item) {
+	var songItem = $(".templates .result").clone();
+	var songElem = songItem.find('.asong');
+	songElem.attr('href', item.previewUrl);
+	var songElem = songItem.find('.awork');
+	songElem.attr('src', item.artworkUrl100);
+	var songElem = songItem.find('p');
+	songElem.text(item.artistName + ' ' + item.trackName);
+	
+	return songItem;
+};
 
 var searchSongs = function(term){
- 
+    
  	var request = {
     	
 		media: 'music',
 		entity: 'song',
-		limit: 1,
+		limit: 9,
 		explicit: 'Yes',
+		term: term.replace(/ /g, '+'),
 	};
 
 	$.ajax({
-		url: "https://itunes.apple.com/search?",
+		url: "https://itunes.apple.com/search",
 		data: request,
 		dataType: "jsonp",
 		type: "GET",
 	})
-	.done(function(data){
-		var searchResults = getSearchResults(request.media, data.entity);
-		 console.log(data)
-		$('#search-term').html(searchResults);
-		$.each(data.entity, function(i, item) {
-			c
-			var music = getMuisc(item);
-			$('#search-results').append(music);
+	.done(function(result){
+		var searchResults = getSearchResults(request.media, result.resultCount);
+		 	
+		$('.search-results').prepend(searchResults);
+		$.each(result.results, function(i, item){
+			var song = getMusic(item);
+			$(".draggable").append(song);
+			$( ".draggable li" ).draggable();
+			// console.log(song)
 		});
 	})
 	.fail(function(jqXHR, error){
 		var errorELm = showError(error);
-		$('#search-results').html(errorElem);
+		$('.search-results').html(errorElem);
 	});
 };
 
+
+
+
 // create jason for itunes  figure how to promp songs into the keys and display artwork let them search by genre
-// droppable function in jquery might work for drag and drop songs 
-// create a function that creates the  samplers 
+ 
+ 
 // prevent keyboard from tiggering sounds when searching for songs 
  
-
-
-
-//limit to top 10 rated songs by artist 
-
-
-
-
-
