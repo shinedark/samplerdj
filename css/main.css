@@ -70,9 +70,6 @@ h1 {
 }
 
 
-
-
-
 .overlay {
 	width: 100%;
 	height: 100%;
@@ -217,16 +214,14 @@ background: radial-gradient(circle, black, white);
 }
 
 .search-results {
-  
-	width: 1150px;
+  	width: 1150px;
 	display: block;
 	margin: 0 auto;
 	padding: 5px;
 }
 
 .draggable {
-    
-	width: 1150px;
+    width: 1150px;
 	display: block;
 	margin: 0 auto;
 	
@@ -235,7 +230,6 @@ background: radial-gradient(circle, black, white);
 
 .draggable >li {
     width: 100px; 
-     
     padding: 5px; 
     margin: 10px 10px 10px 0;
     display: inline-block;
@@ -243,7 +237,6 @@ background: radial-gradient(circle, black, white);
 
 .droppable > li {
 	width: 200px; 
-
 	padding: 5px; 
 	margin-top: 10px; 
 

@@ -44,13 +44,6 @@ KeyMapper.create(77, 'M', 'Hfilter');
 KeyMapper.create(32, 'SPACE');
 
 
-
-
-
-
-
-
-
 $(document).ready(function() {
 
   	
@@ -90,7 +83,7 @@ function createSampler(audioSrc, name) {
 		keyCode: keyCode,
 		isPlaying: false,
 		isLooping: false,
-		sound: function(audioSrc, name) {
+		sound: function(audioSrc, name, source) {
 			this._aud = new Pizzicato.Sound({ 
 		    	source: 'file',
 		    	options: {
@@ -99,6 +92,7 @@ function createSampler(audioSrc, name) {
 			});
 			this.name = name;
 			this.audioSrc = audioSrc;
+			this.source = source;
 		},
 		play: function() {
           this._aud.play();
@@ -119,11 +113,12 @@ function createSampler(audioSrc, name) {
 			var self = this;
 			node.on('touchstart', function(evt){
 				self.play();
-			}).on('touchend', function(evt) {
+			}).on('touchend', function(evt){
 				self.stop();
-			}).on('drop', function(evt) {
-				evt.preventDefault();
-				evt.stopPropagation();
+			}).on("drop", function(evt, ui){
+				self.sound(ui.draggable[0].children[0].attributes[2].nodeValue,'song');
+				// evt.preventDefault();
+				// evt.stopPropagation();
 				console.log('hello');
 			});
 			//need to make this node droppable 
@@ -134,7 +129,7 @@ function createSampler(audioSrc, name) {
 	};
 	
 
-	$(document).keydown(function(evt) {
+	$(document).not('input').keydown(function(evt) {
 		if (evt.keyCode == sampler.keyCode) {
 			sampler.play();
 		}
@@ -228,9 +223,6 @@ function createSampler(audioSrc, name) {
 }
 
 
-
-
-
  // touch effects mobile still have to figure out how to limit to the 2 filters by swipe up or down while hodling it down
 // var effectsTouch = function(){
 // 			var node = $('<li> ' + '</li>').append('.Effects');
@@ -242,19 +234,14 @@ function createSampler(audioSrc, name) {
 // 					});
 // 				};
 
-
-// drag and drop function i think it goes in the doc . ready
 $( function() {
     // $( ".draggable" ).draggable();
-    $( ".droppable" ).droppable({
+    $( ".droppable li" ).droppable({
       drop: function( event, ui ) {
-    console.log(ui.draggable[0].children[0].attributes[2].nodeValue);
+    // console.log(ui.draggable[0].children[0].attributes[2].nodeValue);
       }
     });
   } );
-
-  
-
 
 var dubDelay = new Pizzicato.Effects.DubDelay({
     feedback: 0.6,
@@ -302,7 +289,6 @@ var pingPongDelay = new Pizzicato.Effects.PingPongDelay({
     mix: 0.68
 });
 
-//shows results # but thats it
 var getSearchResults = function(entity, resultNum) {
 	var results = resultNum + ' results for ' + entity;
 	return results;
@@ -313,9 +299,7 @@ var showError = function(error){
 	var errorText = '<p>' + error + '</p>';
 	errorElem.append(errorText);
 };
-
-// this is not doign what i expect not showig the artwork or preview or name or trackname
-//need to fix this 
+ 
 var getMusic = function (item) {
 	var songItem = $(".templates .result").clone();
 	var songElem = songItem.find('.asong');
@@ -363,10 +347,7 @@ var searchSongs = function(term){
 };
 
 
-
-
-// create jason for itunes  figure how to promp songs into the keys and display artwork let them search by genre
- 
- 
 // prevent keyboard from tiggering sounds when searching for songs 
- 
+// clear out search results after each search 
+//if possible create a pre loaded sampler
+
