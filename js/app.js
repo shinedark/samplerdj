@@ -56,8 +56,8 @@ $(document).ready(function() {
   	$('#search-term').submit( function(event){
 		event.preventDefault();
        	
-       	var term= $(this).find("input[name='song']").val();
-        searchSongs(term);
+       	var query= $(this).find("input[name='song']").val();
+        searchSongs(query);
   	});
   	
 
@@ -121,7 +121,7 @@ function createSampler(audioSrc, name) {
 				// evt.stopPropagation();
 				console.log('hello');
 			});
-			//need to make this node droppable 
+			
 		},
 		hasFx: function(fx){
 			return this._aud.effects.includes(fx);
@@ -129,7 +129,7 @@ function createSampler(audioSrc, name) {
 	};
 	
 
-	$(document).not('input').keydown(function(evt) {
+	$(document).keydown(function(evt) {
 		if (evt.keyCode == sampler.keyCode) {
 			sampler.play();
 		}
@@ -238,7 +238,7 @@ $( function() {
     // $( ".draggable" ).draggable();
     $( ".droppable li" ).droppable({
       drop: function( event, ui ) {
-    // console.log(ui.draggable[0].children[0].attributes[2].nodeValue);
+    // console.log(event, ui);
       }
     });
   } );
@@ -289,10 +289,6 @@ var pingPongDelay = new Pizzicato.Effects.PingPongDelay({
     mix: 0.68
 });
 
-var getSearchResults = function(entity, resultNum) {
-	var results = resultNum + ' results for ' + entity;
-	return results;
-};
 
 var showError = function(error){
 	var errorElem = $('.templates .error').clone();
@@ -303,41 +299,39 @@ var showError = function(error){
 var getMusic = function (item) {
 	var songItem = $(".templates .result").clone();
 	var songElem = songItem.find('.asong');
-	songElem.attr('href', item.previewUrl);
+	songElem.attr('href', item.preview_url);
 	var songElem = songItem.find('.awork');
-	songElem.attr('src', item.artworkUrl100);
+	songElem.attr('src', item.album.images[2].url);
 	var songElem = songItem.find('p');
-	songElem.text(item.artistName + ' ' + item.trackName);
+	songElem.text(item.artists[0].name + ' ' + item.name);
 	
 	return songItem;
 };
 
-var searchSongs = function(term){
+var searchSongs = function(query){
     
  	var request = {
     	
-		media: 'music',
-		entity: 'song',
+		q: query,
+		type: 'track',
 		limit: 9,
 		explicit: 'Yes',
-		term: term.replace(/ /g, '+'),
+		// term: term.replace(/ /g, '+'),
 	};
 
 	$.ajax({
-		url: "https://itunes.apple.com/search",
+		url: "https://api.spotify.com/v1/search",
 		data: request,
-		dataType: "jsonp",
+		dataType: "json",
 		type: "GET",
 	})
 	.done(function(result){
-		var searchResults = getSearchResults(request.media, result.resultCount);
-		 	
-		$('.search-results').prepend(searchResults);
-		$.each(result.results, function(i, item){
+		$.each(result.tracks.items, function(i, item){
 			var song = getMusic(item);
+			 // console.log(item);
 			$(".draggable").append(song);
 			$( ".draggable li" ).draggable();
-			// console.log(song)
+			console.log(song)
 		});
 	})
 	.fail(function(jqXHR, error){
@@ -347,7 +341,7 @@ var searchSongs = function(term){
 };
 
 
-// prevent keyboard from tiggering sounds when searching for songs 
 // clear out search results after each search 
+//make sure you have 1 search result at a time clear searches each time 
 //if possible create a pre loaded sampler
 
