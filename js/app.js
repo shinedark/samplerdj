@@ -52,7 +52,6 @@ $(document).ready(function() {
   	}
   
 
-
   	$('#search-term').submit( function(event){
 		event.preventDefault();
        	
@@ -117,9 +116,9 @@ function createSampler(audioSrc, name) {
 				self.stop();
 			}).on("drop", function(evt, ui){
 				self.sound(ui.draggable[0].children[0].attributes[2].nodeValue,'song');
-				// evt.preventDefault();
-				// evt.stopPropagation();
-				console.log('hello');
+				console.log(evt);
+				$(evt.target).css("background-image","url('" + ui.draggable[0].children[1].attributes[1].nodeValue + "')");
+				$(ui.draggable[0]).remove();
 			});
 			
 		},
@@ -235,10 +234,9 @@ function createSampler(audioSrc, name) {
 // 				};
 
 $( function() {
-    // $( ".draggable" ).draggable();
     $( ".droppable li" ).droppable({
       drop: function( event, ui ) {
-    // console.log(event, ui);
+    console.log(event, ui);
       }
     });
   } );
@@ -309,7 +307,7 @@ var getMusic = function (item) {
 };
 
 var searchSongs = function(query){
-    
+    $(".draggable").html('');
  	var request = {
     	
 		q: query,
@@ -341,7 +339,7 @@ var searchSongs = function(query){
 };
 
 
-// clear out search results after each search 
-//make sure you have 1 search result at a time clear searches each time 
-//if possible create a pre loaded sampler
+
+//minimize to 4 samplers in mobile and 2 fx(both filters)
+
 
