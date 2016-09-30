@@ -150,7 +150,7 @@ h1 {
 	margin: 0 auto;
 	height: 100%;
 	width: 100%;
-	position: absolute;
+	
 }
 
 .artwork{
@@ -186,6 +186,7 @@ h1 {
 	
 }
 
+
 .Effects > li {
   background: radial-gradient(circle, black, grey);
   padding: 5px;
@@ -199,6 +200,15 @@ h1 {
   font-size: 3em;
   text-align: center;
 	
+}
+
+@media screen and (max-width: 500px){
+	.artwork > li, .Effects > li {
+		display: none;
+	}
+	.artwork > li.sampler-18,.artwork > li.sampler-17,.artwork > li.sampler-16,.artwork > li.sampler-15 {
+		display: flex;
+	}
 }
 
 
@@ -236,6 +246,9 @@ h1 {
     margin: 10px 10px 10px 0;
     display: inline-block;
 }
+img.awork {
+    width: 100%;
+}
 
 .droppable > li {
 	width: 200px; 
@@ -252,4 +265,43 @@ font-weight: bold;
 text-align: center;
 }
 
+.social {
+    font-size: 1rem;
+    color: black;
+    text-align: center;
+
+    margin-top: 30px;
+    
+  	padding: 1rem;
+}
+.social h5 {
+    font: inherit;
+}
+ 
+.icons { 
+  list-style: none;
+  padding: 0;
+}
+.social .icons > li {
+    border-radius: 1.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-block;
+    margin: 1.25rem 5px;
+    border: 1px solid #eaebec;
+    padding: 0.625rem 0;
+    text-align: center;
+}
+.social .twitter {
+    color: #55acee;
+}
+
+.social .instagram{
+    color: #3f729b;
+}
+.social .copy {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: #838994;
+}
 

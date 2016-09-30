@@ -48,7 +48,7 @@ $(document).ready(function() {
 
   	
   	for (var i = 18; i >= 0; i--) {
-  		createSampler().render();
+  		createSampler(i).render();
   	}
   
 
@@ -72,7 +72,7 @@ $(document).ready(function() {
 
 var keyQueue = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
 // Factory pattern 
-function createSampler(audioSrc, name) {
+function createSampler(i) {
 
 	if (!keyQueue.length){
 		throw new Error (' Max Samplers already created.');
@@ -108,7 +108,7 @@ function createSampler(audioSrc, name) {
 		  this.isLooping = true;
 		},
 		render: function(){
-			var node = $('<li>Press ' + KeyMapper.getValue(this.keyCode) + ' for ' + this.name + '</li>').appendTo('.artwork');
+			var node = $('<li class="sampler-'+ i + '">Press ' + KeyMapper.getValue(this.keyCode) + ' for ' + this.name + '</li>').appendTo('.artwork');
 			var self = this;
 			node.on('touchstart', function(evt){
 				self.play();
@@ -116,7 +116,6 @@ function createSampler(audioSrc, name) {
 				self.stop();
 			}).on("drop", function(evt, ui){
 				self.sound(ui.draggable[0].children[0].attributes[2].nodeValue,'song');
-				console.log(evt);
 				$(evt.target).css("background-image","url('" + ui.draggable[0].children[1].attributes[1].nodeValue + "')");
 				$(ui.draggable[0]).remove();
 			});
@@ -129,6 +128,7 @@ function createSampler(audioSrc, name) {
 	
 
 	$(document).keydown(function(evt) {
+		if(evt.target.nodeName!="INPUT"){
 		if (evt.keyCode == sampler.keyCode) {
 			sampler.play();
 		}
@@ -175,8 +175,9 @@ function createSampler(audioSrc, name) {
 				sampler._aud.addEffect(highPassFilter);
 			}		
 		}
-
+	}
 	}).keyup(function(evt) {
+		if(evt.target.nodeName!="INPUT"){
 		if (evt.keyCode == sampler.keyCode && !sampler.isLooping) {
 			sampler.stop();
 		}
@@ -215,7 +216,7 @@ function createSampler(audioSrc, name) {
 				sampler._aud.removeEffect(highPassFilter);
 			}
 		}
-
+	}
 	});
 
 	return sampler;
@@ -236,7 +237,7 @@ function createSampler(audioSrc, name) {
 $( function() {
     $( ".droppable li" ).droppable({
       drop: function( event, ui ) {
-    console.log(event, ui);
+    
       }
     });
   } );
@@ -299,7 +300,7 @@ var getMusic = function (item) {
 	var songElem = songItem.find('.asong');
 	songElem.attr('href', item.preview_url);
 	var songElem = songItem.find('.awork');
-	songElem.attr('src', item.album.images[2].url);
+	songElem.attr('src', item.album.images[1].url);
 	var songElem = songItem.find('p');
 	songElem.text(item.artists[0].name + ' ' + item.name);
 	
@@ -314,7 +315,6 @@ var searchSongs = function(query){
 		type: 'track',
 		limit: 9,
 		explicit: 'Yes',
-		// term: term.replace(/ /g, '+'),
 	};
 
 	$.ajax({
@@ -325,11 +325,9 @@ var searchSongs = function(query){
 	})
 	.done(function(result){
 		$.each(result.tracks.items, function(i, item){
-			var song = getMusic(item);
-			 // console.log(item);
+			var song = getMusic(item); 
 			$(".draggable").append(song);
 			$( ".draggable li" ).draggable();
-			console.log(song)
 		});
 	})
 	.fail(function(jqXHR, error){
@@ -340,6 +338,7 @@ var searchSongs = function(query){
 
 
 
-//minimize to 4 samplers in mobile and 2 fx(both filters)
+//minimize to 4 samplers in mobile and no fx
+
 
 
