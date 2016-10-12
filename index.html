@@ -9,42 +9,18 @@
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body>
-	<header>
+	<header class="dope">
 		<nav>
 			<ul class="clearfix">
-				<li><a class="how" href="#">How to play</a></li>
 				<li><a class="new" href="index.html">New Empty Sampler</a></li>
 			</ul>
 		</nav>
 
-		<div class="overlay" id="modal">
-			<div class="content">
-				<h3>How to play</h3>
-				<div>
-					<p>This is a Music Sampler/Dj tool By Shine Dark. The Sampler works like this: </p>
-					<ul>
-						<li>1. The keys Q throguh P row and A thorugh L of the keyboard let's you trigger a song. If you let go the song stops. </li>
-						<li>2. If you hold down a key and press space bar the song will play, allowing you to play other songs on top as long as you hold them down.</li>
-						<li>3.If you  hit the space bar again the song playing hold will stop. and becomes avaialbe to do so with another song</li>
-						<li>4.if you press any key on the row from Z to M it  will add a audio effect to the audio</li>
-						<li>5.To load a song use the search bar and once you find what you are looking for, drag and drop to one of the 19 open samplers</li>
-						<li>6.To empty the smapler just hit new on the top right</li>
-						<li>Mobile version limits effects and samplers</li>
-					</ul>
-					<p>Are you ready?</p>
-					<a class="close" href="#">Got It!</a>
-				</div>
-			</div>
-		</div>        
-		<h1>Shine Dark Sampler</h1>
-		<div class="apple">
-			<img src="">
-		</div>
+		<h1>Sampler Dj</h1>
 	
 	</header>
 			<form id="search-term">
-			<input type="text" placeholder="e.g., Future" name="song" size="20" required>	
-			<button class="button" type="submit">Search Spotify</button>
+			<input class="search-box" type="text" placeholder="e.g., Future" name="song" size="20" required>	
 			</form>
 				<div class="search-results">
 						<ul class="draggable">
@@ -68,20 +44,25 @@
 				
 					<div id="Fx">
 						<ul class="Effects">
-							<li>Delay</li>
-							<li>Dub Delay</li>
-							<li>Low Pass Filter</li>
-							<li>Reverb</li>
-							<li>Ping Pong Delay</li>
-							<li>Flanger</li>
-							<li>High Pass Filter</li>
-							<li>Loop</li>
+							<li><span class="tooltip">Press Z</span>Delay</li>
+							<li><span class="tooltip">Press X</span>Dub Delay</li>
+							<li><span class="tooltip">Press C</span>Low Pass Filter</li>
+							<li><span class="tooltip">Press V</span>Reverb</li>
+							<li><span class="tooltip">Press B</span>Ping Pong Delay</li>
+							<li><span class="tooltip">Press N</span>Flanger</li>
+							<li><span class="tooltip">Press M</span>High Pass Filter</li>
+							<li><span class="tooltip">Press Sapce</span>Loop</li>
 						</ul>
 					</div> 
 				</content>
  
     <footer class="social">
     	 <hr>
+    	 <div>
+    	 	<p>Powered by</p>
+    	 	<img class="spot" src="images/spotify.png">
+
+    	 </div>
             <h5>Social</h5>
             <ul class="icons">
                 <li class="twitter">
@@ -89,7 +70,13 @@
                 </li>
                 <li class="instagram">
                  <a href="https://www.instagram.com/shinedarkmusic/"><i class="fa fa-instagram"></i></a>
-                    </li>
+                </li>
+                <li class="github">
+                 <a href="https://github.com/shinedark"><i class="fa fa-github"></i></a>
+                </li>
+                <li class="website">
+                 <a href="http://www.shinedarkmusic.com/"><i class="fa fa-home"></i></a>
+                </li>
             </ul>
 	</footer>
 

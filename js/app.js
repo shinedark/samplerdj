@@ -108,7 +108,7 @@ function createSampler(i) {
 		  this.isLooping = true;
 		},
 		render: function(){
-			var node = $('<li class="sampler-'+ i + '">Press ' + KeyMapper.getValue(this.keyCode) + ' for ' + this.name + '</li>').appendTo('.artwork');
+			var node = $('<li class="sampler-'+ i + '">Press ' + KeyMapper.getValue(this.keyCode) + '</li>').appendTo('.artwork');
 			var self = this;
 			node.on('touchstart', function(evt){
 				self.play();
@@ -133,6 +133,7 @@ function createSampler(i) {
 			sampler.play();
 		}
 		else if (evt.keyCode == KeyMapper.getCode('SPACE') && sampler.isPlaying){
+			evt.preventDefault();
 			if (sampler.isLooping){
 				sampler.stop();
 			}
@@ -324,6 +325,7 @@ var searchSongs = function(query){
 		type: "GET",
 	})
 	.done(function(result){
+		$("#sampler").show();
 		$.each(result.tracks.items, function(i, item){
 			var song = getMusic(item); 
 			$(".draggable").append(song);

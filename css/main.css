@@ -51,6 +51,19 @@ html {
 
 }
 
+.new {
+	color: white;
+}
+
+.dope {
+	background-image: url('../images/dope.jpg');
+	background-repeat: inherit;
+	background-attachment: inherit;
+	background-position: 49% 33%;
+
+}
+
+
 h1 {
  
  text-align: center;
@@ -63,7 +76,6 @@ h1 {
       -1px 1px 0 #000,
        1px 1px 0 #000;
 }
-
 
 .apple {
 	text-align: center;
@@ -150,7 +162,8 @@ h1 {
 	margin: 0 auto;
 	height: 100%;
 	width: 100%;
-	
+	display: none;
+	clear: both;
 }
 
 .artwork{
@@ -193,14 +206,32 @@ h1 {
   width: 150px;
   height: 50px;
   margin-top: 10px;
-  
+  position: relative;
   line-height: 100px;
   color: white;
   font-weight: bold;
-  font-size: 3em;
+  font-size: 1.5em;
   text-align: center;
 	
 }
+
+.Effects > li:hover > .tooltip {
+        display: block;
+}
+
+.tooltip {
+        display: none;
+        position: absolute;
+        top: -40px;
+        font-size: 16px;
+        background-color: rgba(0,0,0,0.8);
+        padding: 10px 15px;
+        margin: 0;
+        line-height: 16px;
+        left: 25px;
+}
+
+
 
 @media screen and (max-width: 500px){
 	.artwork > li, .Effects > li {
@@ -218,11 +249,16 @@ h1 {
 
 
 #search-term {
-	
-	width: 350px;
+	text-align: center;
 	display: block;
 	margin: 0 auto;
 	list-style-type: disc;
+}
+
+input.search-box {
+    font-size: 2em;
+    text-align: center;
+    padding: 10px;
 }
 
 .search-results {
@@ -236,6 +272,8 @@ h1 {
     width: 1150px;
 	display: block;
 	margin: 0 auto;
+	/*	*/
+	height: 220px;
 	
 }
 
@@ -244,10 +282,15 @@ h1 {
     width: 100px; 
     padding: 5px; 
     margin: 10px 10px 10px 0;
-    display: inline-block;
+    display: block;
+    float: left;
 }
 img.awork {
     width: 100%;
+}
+
+.draggable > li > p {
+	font-size: 0.9em;
 }
 
 .droppable > li {
@@ -257,12 +300,8 @@ img.awork {
 
 }
 
-.button {
-background: black;	
-padding: 5px;
-color: white;
-font-weight: bold;
-text-align: center;
+.spot {
+	width: 300px;
 }
 
 .social {
