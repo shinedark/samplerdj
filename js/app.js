@@ -315,6 +315,7 @@ var searchSongs = function(query){
 		q: query,
 		type: 'track',
 		limit: 9,
+		market: 'US',
 		explicit: 'Yes',
 	};
 
