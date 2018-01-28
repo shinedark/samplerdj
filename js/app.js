@@ -319,7 +319,7 @@ var searchSongs = function(query){
 		explicit: 'Yes',
 	};
 
-	var client_id = 'f236bcf1295242eb8acd55c05d0fcdb8';
+	
 	var accessToken = 'BQBJheJ8h-3gGriOjr1bByAOEFPztdRnaQZf1eOsUiPOHPpixylzaxW4lGhZO1bwbxjKn3e3cmNtkyQ_Spv294QKf5tcrTVMzErst7hVZsWt8U0cQMG9-onbEyBxC867HD_UlgFr9RX_971yUNLL';
 
 	$.ajax({
