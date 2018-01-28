@@ -166,6 +166,10 @@ h1 {
 	clear: both;
 }
 
+content#sampler {
+    display: inline-block;
+}
+
 .artwork{
   padding: 0;
   margin: 0;

@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 # samplerdj
 
 ![sampler blank](/images/samplerdj-blank.png)
 ![sampler loaded](/images/samplerdj-loaded.png)
+
+This web app lets you search spotify tracks and drag and drop them to load them to 1 of 19 samplers available to be triggered by the keyboard.
+=======
+# samplerdj 
+
+![sampler blank](/samplerdj-blank.png)
+![sampler loaded](/samplerdj-loaded.png)
 
 This web app lets you search spotify tracks and drag and drop them to load them to 1 of 19 samplers available to be triggered by the keyboard.
 
