@@ -318,12 +318,20 @@ var searchSongs = function(query){
 		explicit: 'Yes',
 	};
 
+	var client_id = 'f236bcf1295242eb8acd55c05d0fcdb8';
+	var accessToken = 'BQAIC77MhnZUVcx2b3izGf8PkeBGqj69sjz0pAYWUtYcxygyBkU-mP9gr2gmqDt7eWBNxcsrQsXhT0iHxkKuxuHVL54b1b2dcoK1h7_3_qsCr7kll_DgMR8QbgTbjfJvySpPNde-84Hix-YrOGr7';
+
 	$.ajax({
 		url: "https://api.spotify.com/v1/search",
 		data: request,
 		dataType: "json",
 		type: "GET",
+		headers: {
+          'Authorization': 'Bearer ' + accessToken ,
+          'Accept': 'application/json'
+        },
 	})
+	// console.log(request)
 	.done(function(result){
 		$("#sampler").show();
 		$.each(result.tracks.items, function(i, item){
