@@ -59,9 +59,9 @@ $(document).ready(function() {
         searchSongs(query);
   	});
   	
-  	// $('.start').click(function(){
-  	//   	getToken();
-  	// });
+  	$('.start').click(function(){
+  	  	getToken();
+  	});
 
 });
 
@@ -314,6 +314,34 @@ var searchSongs = function(query){
 		explicit: 'Yes',
 	};
 
+	
+
+
+	$.ajax({
+		url: "https://api.spotify.com/v1/search",
+		data: request,
+		dataType: "json",
+		type: "GET",
+		headers: {
+          'Authorization': 'Bearer ' + this._token,
+          'Accept': 'application/json',
+        },
+	})
+	// console.log(request)
+	.done(function(result){
+		$.each(result.tracks.items, function(i, item){
+			var song = getMusic(item); 
+			$(".draggable").append(song);
+			$( ".draggable li" ).draggable();
+		});
+	})
+	.fail(function(jqXHR, error){
+		var errorELm = showError(error);
+		$('.search-results').html(errorElem);
+	});
+};
+
+var getToken = function (){
 	var hash = window.location.hash
 	.substring(1)
 	.split('&')
@@ -336,35 +364,7 @@ var searchSongs = function(query){
 	if (!_token) {
 	  window.location = `${authEndpoint}?client_id=${client_id}&redirect_uri=${redirect_uri}&state=${hash}&response_type=token&show_dialog=true`;
 	}
-
-
-	$.ajax({
-		url: "https://api.spotify.com/v1/search",
-		data: request,
-		dataType: "json",
-		type: "GET",
-		headers: {
-          'Authorization': 'Bearer ' + _token,
-          'Accept': 'application/json',
-        },
-	})
-	// console.log(request)
-	.done(function(result){
-		$.each(result.tracks.items, function(i, item){
-			var song = getMusic(item); 
-			$(".draggable").append(song);
-			$( ".draggable li" ).draggable();
-		});
-	})
-	.fail(function(jqXHR, error){
-		var errorELm = showError(error);
-		$('.search-results').html(errorElem);
-	});
 };
-
-// var getToken = function (){
-	
-// };
 
 
 
