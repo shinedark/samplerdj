@@ -314,7 +314,7 @@ var searchSongs = function(query){
 		explicit: 'Yes',
 	};
 
-	var hash = window.location.hash
+	var state = window.location.hash
 	.substring(1)
 	.split('&')
 	.reduce(function (initial, item) {
