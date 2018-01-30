@@ -331,12 +331,12 @@ var searchSongs = function(query){
 	var _token = hash.access_token;
 
 	var authEndpoint = 'https://accounts.spotify.com/authorize';
-
-	var clientId = 'f236bcf1295242eb8acd55c05d0fcdb8';
-	var redirectUri = 'https://shinedark.github.io/samplerdj/';
+	var response_type = 'token';
+	var client_id = 'f236bcf1295242eb8acd55c05d0fcdb8';
+	var redirect_uri = 'https://shinedark.github.io/samplerdj/';
 
 	if (!_token) {
-	  window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&show_dialog=true`;
+	  window.location = `${authEndpoint}?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=token&show_dialog=true`;
 	}
 
 
