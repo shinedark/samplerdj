@@ -311,7 +311,6 @@ var searchSongs = function(query){
 		q: query,
 		type: 'track',
 		limit: 9,
-		market: 'US',
 		explicit: 'Yes',
 	};
 
@@ -322,7 +321,7 @@ var searchSongs = function(query){
 		dataType: "json",
 		type: "GET",
 		headers: {
-          'Authorization': 'Bearer ' + this._token + this.expires_in,
+          'Authorization': 'Bearer ' + this._token,
           'Accept': 'application/json',
         },
 	})
@@ -355,7 +354,6 @@ var getToken = function (){
 
 	// Set token
 	var _token = hash.access_token;
-	var expires_in = 540000;
 	var authEndpoint = 'https://accounts.spotify.com/authorize';
 	var response_type = 'token';
 	var client_id = 'f236bcf1295242eb8acd55c05d0fcdb8';
