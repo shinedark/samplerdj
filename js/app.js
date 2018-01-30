@@ -59,14 +59,10 @@ $(document).ready(function() {
         searchSongs(query);
   	});
   	
-
-  	$(".how").click(function(){
-    	$(".overlay").fadeIn(1000);
+  	$('.token').click(function(){
+  		getToken();
   	});
 
-  	$("a.close").click(function(){
-  		$(".overlay").fadeOut(1000);
-  	});
 });
 
 
@@ -319,8 +315,30 @@ var searchSongs = function(query){
 		explicit: 'Yes',
 	};
 
-	
-	var accessToken = 'BQBJheJ8h-3gGriOjr1bByAOEFPztdRnaQZf1eOsUiPOHPpixylzaxW4lGhZO1bwbxjKn3e3cmNtkyQ_Spv294QKf5tcrTVMzErst7hVZsWt8U0cQMG9-onbEyBxC867HD_UlgFr9RX_971yUNLL';
+	var hash = window.location.hash
+	.substring(1)
+	.split('&')
+	.reduce(function (initial, item) {
+	  if (item) {
+	    var parts = item.split('=');
+	    initial[parts[0]] = decodeURIComponent(parts[1]);
+	  }
+	  return initial;
+	}, {});
+	window.location.hash = '';
+
+	// Set token
+	var _token = hash.access_token;
+
+	var authEndpoint = 'https://accounts.spotify.com/authorize';
+
+	var clientId = 'f236bcf1295242eb8acd55c05d0fcdb8';
+	var redirectUri = 'https://shinedark.github.io/samplerdj/';
+
+	if (!_token) {
+	  window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&show_dialog=true`;
+	}
+
 
 	$.ajax({
 		url: "https://api.spotify.com/v1/search",
@@ -328,13 +346,12 @@ var searchSongs = function(query){
 		dataType: "json",
 		type: "GET",
 		headers: {
-          'Authorization': 'Bearer ' + accessToken ,
+          'Authorization': 'Bearer ' + _token ,
           'Accept': 'application/json'
         },
 	})
 	// console.log(request)
 	.done(function(result){
-		$("#sampler").show();
 		$.each(result.tracks.items, function(i, item){
 			var song = getMusic(item); 
 			$(".draggable").append(song);
@@ -349,7 +366,6 @@ var searchSongs = function(query){
 
 
 
-//minimize to 4 samplers in mobile and no fx
 
 
 
