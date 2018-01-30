@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/shinedark/samplerdj/issues"
   },
-  "homepage": "https://github.com/shinedark/samplerdj#readme"
+  "homepage": "https://github.com/shinedark/samplerdj#readme",
+  "dependencies": {
+    "spotify-refresh": "^2.0.3"
+  }
 }

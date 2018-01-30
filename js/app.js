@@ -59,9 +59,6 @@ $(document).ready(function() {
         searchSongs(query);
   	});
   	
-  	$('.token').click(function(){
-  		getToken();
-  	});
 
 });
 
