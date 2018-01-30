@@ -327,7 +327,7 @@ var searchSongs = function(query){
 	window.location.hash = '';
 
 	// Set token
-	var _token = hash.access_token;
+	var _token = state.access_token;
 	var authEndpoint = 'https://accounts.spotify.com/authorize';
 	var response_type = 'token';
 	var client_id = 'f236bcf1295242eb8acd55c05d0fcdb8';
