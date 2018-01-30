@@ -314,7 +314,7 @@ var searchSongs = function(query){
 		explicit: 'Yes',
 	};
 
-	var state = window.location.hash
+	var hash = window.location.hash
 	.substring(1)
 	.split('&')
 	.reduce(function (initial, item) {
@@ -327,14 +327,14 @@ var searchSongs = function(query){
 	window.location.hash = '';
 
 	// Set token
-	var _token = state.access_token;
+	var _token = hash.access_token;
 	var authEndpoint = 'https://accounts.spotify.com/authorize';
 	var response_type = 'token';
 	var client_id = 'f236bcf1295242eb8acd55c05d0fcdb8';
 	var redirect_uri = 'https://shinedark.github.io/samplerdj/';
 
 	if (!_token) {
-	  window.location = `${authEndpoint}?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=token&show_dialog=true`;
+	  window.location = `${authEndpoint}?client_id=${client_id}&redirect_uri=${redirect_uri}&state=${hash}&response_type=token&show_dialog=true`;
 	}
 
 
